@@ -2,7 +2,7 @@ package services;
 
 import java.util.List;
 
-import datos.PaymentMethod;
+import entities.PaymentMethod;
 
 ///Interface IPaymentMethodService:
 public interface IPaymentMethodService {

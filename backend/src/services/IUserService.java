@@ -2,7 +2,7 @@ package services;
 
 import java.util.List;
 
-import datos.User;
+import entities.User;
 
 ///Interface IUserService:
 public interface IUserService {
