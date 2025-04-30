@@ -2,7 +2,7 @@ package repositories;
 
 import java.util.List;
 
-import datos.Card;
+import entities.Card;
 
 ///Interface ICardRepository:
 public interface ICardRepository {

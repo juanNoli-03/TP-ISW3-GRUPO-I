@@ -2,7 +2,7 @@ package services;
 
 import java.util.List;
 
-import datos.Card;
+import entities.Card;
 
 ///Interface ICardService:
 public interface ICardService {

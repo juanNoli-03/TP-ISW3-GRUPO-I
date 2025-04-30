@@ -1,4 +1,4 @@
-package datos;
+package entities;
 
 ///Clase PaymentMethod:
 public class PaymentMethod {

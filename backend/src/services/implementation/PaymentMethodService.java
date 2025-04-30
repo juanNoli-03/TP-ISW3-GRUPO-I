@@ -2,7 +2,7 @@ package services.implementation;
 
 import java.util.List;
 
-import datos.PaymentMethod;
+import entities.PaymentMethod;
 import repositories.IPaymentMethodRepository;
 
 ///Clase PaymentMethodService:
