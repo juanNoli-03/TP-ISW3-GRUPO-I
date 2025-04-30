@@ -1,4 +1,4 @@
-package datos;
+package entities;
 
 ///Clase Card:
 public class Card {

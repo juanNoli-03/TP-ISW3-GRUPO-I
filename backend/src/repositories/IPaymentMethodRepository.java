@@ -2,7 +2,7 @@ package repositories;
 
 import java.util.List;
 
-import datos.PaymentMethod;
+import entities.PaymentMethod;
 
 ///Interface IPaymentMethodRepository:
 public interface IPaymentMethodRepository {

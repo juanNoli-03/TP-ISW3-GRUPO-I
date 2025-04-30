@@ -2,7 +2,7 @@ package services.implementation;
 
 import java.util.List;
 
-import datos.User;
+import entities.User;
 import repositories.IUserRepository;
 
 ///Clase UserService:

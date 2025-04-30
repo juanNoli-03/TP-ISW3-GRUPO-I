@@ -2,7 +2,7 @@ package services.implementation;
 
 import java.util.List;
 
-import datos.Card;
+import entities.Card;
 import repositories.ICardRepository;
 
 ///Clase CardService:

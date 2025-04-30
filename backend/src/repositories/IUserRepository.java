@@ -2,7 +2,7 @@ package repositories;
 
 import java.util.List;
 
-import datos.User;
+import entities.User;
 
 ///Interface IUserRepository:
 public interface IUserRepository {

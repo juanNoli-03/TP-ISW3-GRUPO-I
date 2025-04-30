@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import datos.Transaction;
+import entities.Transaction;
 
 ///Interface ITransactionRepository:
 public interface ITransactionRepository {
