@@ -63,7 +63,7 @@ Endpoint para agregar a un usuario en el sistema. El endpoint permite al usuario
     "dni": "45233126"
   }
 
-🟣	**PATCH** -- **`/user/{idUser}`** 
+🟣 **PATCH** -- **`/user/{idUser}`** 
   
 Endpoint para actualizar los datos de un usuario. El endpoint permite al usuario actualizar los datos de un determinado usuario.
 
@@ -132,14 +132,14 @@ Endpoint para obtener las tarjetas de los usuarios presentes en el sistema.
     [
       {
        "number": "2515551140",
-		   "balance": "1000",
-		   "activated": "true",
+       "balance": "1000",
+	"activated": "true",
        "idUser": 5
       },
       {
        "number": "6015551140",
-		   "balance": "-500",
-		   "activated": "false",
+	"balance": "-500",
+	"activated": "false",
        "idUser": 2
       }
    
@@ -161,8 +161,8 @@ Endpoint para obtener las tarjetas presentes en el sistema de un determinado usu
     [
       {
        "number": "2515551140",
-		   "balance": "1000",
-		   "activated": "true"
+       "balance": "1000",
+	"activated": "true"
       }
     ]
 
@@ -177,12 +177,12 @@ Endpoint para agregar una tarjeta en el sistema.
   ```json
   {
     "number": "2515551140",
-		"balance": "0",
-		"activated": "true",
+    "balance": "0",
+    "activated": "true",
     "idUser": 5
   }
 
-🟣	**PATCH** -- **`/card/{idCard}`** 
+🟣 **PATCH** -- **`/card/{idCard}`** 
   
 Endpoint para actualizar los datos de una determinada tarjeta. El endpoint permite al usuario actualizar los datos de una determinada tarjeta.
 
@@ -197,8 +197,8 @@ Endpoint para actualizar los datos de una determinada tarjeta. El endpoint permi
   ```json
   {
     "number": "2515551140",
-		"balance": "5000",
-		"activated": "true"
+    "balance": "5000",
+    "activated": "true"
   }
 
 *Junto con el ID de la Card como párametro*
@@ -208,11 +208,11 @@ Endpoint para actualizar los datos de una determinada tarjeta. El endpoint permi
    ```json
    {
     "number": "2515551140",
-		"balance": "5000",
-		"activated": "true"
+    "balance": "5000",
+    "activated": "true"
   }
 
-🟣	**PATCH** -- **`/card/desactivate/{idCard}`** 
+🟣 **PATCH** -- **`/card/desactivate/{idCard}`** 
   
 Endpoint para desactivar una determinada tarjeta. El endpoint permite al usuario desactivar una determinada tarjeta.
 
@@ -222,7 +222,7 @@ Endpoint para desactivar una determinada tarjeta. El endpoint permite al usuario
 
   ```json
   {
-		"activated": "false"
+    "activated": "false"
   }
 
 *Junto con el ID de la Card como párametro*
@@ -230,7 +230,7 @@ Endpoint para desactivar una determinada tarjeta. El endpoint permite al usuario
 - Salida:
 
    ```json
-		"Card desactivated!"
+  "Card desactivated!"
    
 🔴 **DELETE** -- **`/card/{idCard}`** 
   
@@ -269,12 +269,12 @@ Endpoint para obtener los métodos de pago presentes en el sistema.
     [
       {
        "type": "debit,
-		   "activated": "true",
+	"activated": "true",
        "data": "0156398456"
       },
       {
        "type": "credit,
-		   "activated": "true",
+	"activated": "true",
        "data": "0156784123"
       }
     ]
@@ -290,11 +290,11 @@ Endpoint para agregar un nuevo método de pago al sistema.
   ```json
   {
     "type": "debit,
-		"activated": "true",
+    "activated": "true",
     "data": "0156398456"
   }
 
-🟣	**PATCH** -- **`/paymentMethod/{idPaymentMethod}`** 
+🟣 **PATCH** -- **`/paymentMethod/{idPaymentMethod}`** 
   
 Endpoint para actualizar los datos de un método de pago. El endpoint permite al usuario actualizar los datos de un determinado método de pago.
 
@@ -308,7 +308,7 @@ Endpoint para actualizar los datos de un método de pago. El endpoint permite al
 
   ```json
   {
-    "type": "credit,
+    "type": "credit",
   }
 
 *Junto con el ID del Payment Method como párametro*
@@ -317,12 +317,12 @@ Endpoint para actualizar los datos de un método de pago. El endpoint permite al
 
    ```json
    {
-    "type": "credit,
-		"activated": "true",
+    "type": "credit",
+     "activated": "true",
     "data": "0156398456"
   }
 
-🟣	**PATCH** -- **`/paymentMethod/desactivate/{idPaymenthMethod}`** 
+🟣 **PATCH** -- **`/paymentMethod/desactivate/{idPaymenthMethod}`** 
   
 Endpoint para desactivar un método de pago. El endpoint permite al usuario desactivar un determinado método de pago.
 
@@ -332,7 +332,7 @@ Endpoint para desactivar un método de pago. El endpoint permite al usuario desa
 
   ```json
   {
-		"activated": "false"
+     "activated": "false"
   }
 
 *Junto con el ID del Payment Method como párametro*
@@ -340,7 +340,7 @@ Endpoint para desactivar un método de pago. El endpoint permite al usuario desa
 - Salida:
 
    ```json
-		"Payment Method desactivated!"
+   "Payment Method desactivated!"
    
 🔴 **DELETE** -- **`/paymentMethod/{idPaymentMethod}`** 
   
@@ -375,14 +375,14 @@ Endpoint para obtener todas las transacciones presentes en el sistema.
     [
       {
        "date": "2024-10-11",
-		   "time": "10:29:25",
+       "time": "10:29:25",
        "type": "payment",
        "description": "Pago de transporte",
        "price": "500"
       },
       {
        "date": "2024-10-20",
-		   "time": "10:45:25",
+	"time": "10:45:25",
        "type": "Deposito",
        "description": "Deposito para Pago de transporte",
        "price": "5000"
@@ -405,14 +405,14 @@ Endpoint para obtener todas las transacciones pertenecientes a una determinada t
     [
       {
        "date": "2024-10-11",
-		   "time": "10:29:25",
+	"time": "10:29:25",
        "type": "payment",
        "description": "Pago de transporte",
        "price": "500"
       },
       {
        "date": "2024-10-20",
-		   "time": "10:45:25",
+       "time": "10:45:25",
        "type": "Deposito",
        "description": "Deposito para Pago de transporte",
        "price": "5000"
@@ -430,13 +430,13 @@ Endpoint para generar una nueva transacción.
   ```json
   {
      "date": "2024-10-11",
-		 "time": "10:29:25",
+     "time": "10:29:25",
      "type": "payment",
      "description": "Pago de transporte",
      "price": "500"
   }
 
-🟣	**PATCH** -- **`/transaction/{idTransaction}`** 
+🟣 **PATCH** -- **`/transaction/{idTransaction}`** 
   
 Endpoint para actualizar los datos de una determinada transacción. El endpoint permite al usuario actualizar los datos de una determinada transacción.
 
@@ -461,7 +461,7 @@ Endpoint para actualizar los datos de una determinada transacción. El endpoint 
    ```json
    {
      "date": "2024-10-11",
-		 "time": "10:29:25",
+     "time": "10:29:25",
      "type": "deposit",
      "description": "Acreditacion de boleto estudiantil",
      "price": "25000"
