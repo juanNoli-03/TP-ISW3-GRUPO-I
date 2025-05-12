@@ -268,12 +268,12 @@ Endpoint para obtener los métodos de pago presentes en el sistema.
    ```json
     [
       {
-       "type": "debit,
+       "type": "debit",
 	"activated": "true",
        "data": "0156398456"
       },
       {
-       "type": "credit,
+       "type": "credit",
 	"activated": "true",
        "data": "0156784123"
       }
@@ -289,7 +289,7 @@ Endpoint para agregar un nuevo método de pago al sistema.
 
   ```json
   {
-    "type": "debit,
+    "type": "debit",
     "activated": "true",
     "data": "0156398456"
   }
