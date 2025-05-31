@@ -1,8 +1,9 @@
 import Movement from './Movement'
+import './Movements.css';
 
 export default function Movements({movements}) {
   return(
-    <>
+    <div className="movements-container">
       <h3>Movimientos</h3>
       <table>
         <thead>
@@ -19,6 +20,6 @@ export default function Movements({movements}) {
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   )
 }
