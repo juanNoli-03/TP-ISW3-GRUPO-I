@@ -6,7 +6,7 @@
 
 <div id="user-content-toc">
   <ul align="left">
-    <summary><h2 style="display: inline-block">Link al entregable 1: https://drive.google.com/file/d/1tiwfnfjjXOtsZKuxSXCjJhq2JbvjhMXf/view?usp=sharing</summary>
+    <summary><h2 style="display: inline-block">Entregable 1: https://drive.google.com/file/d/1uQYhqqHme0HApTLcS5COTxVJnpPtNt4c/view?usp=sharing</summary>
   </ul>
 </div>
 
