@@ -48,7 +48,7 @@ export let transactions = [
   { id: 46, date: '2025-04-14', time: '06:25:00', type: 'Colectivo', description: 'Línea 150 Interno 1', price: 370, cardId: 5 },
   { id: 47, date: '2025-04-14', time: '08:05:00', type: 'Tren', description: 'Línea Sarmiento Moreno', price: 765, cardId: 2 },
   { id: 48, date: '2025-04-14', time: '18:10:00', type: 'Colectivo', description: 'Línea 109 Interno 12', price: 390, cardId: 1 },
-  { id: 49, date: '2025-04-15', time: '6:15:00', type: 'Carga de saldo', description: 'Carga de saldo mediante aplicación', price: 1200, cardId: 1 },
+  { id: 49, date: '2025-04-15', time: '06:15:00', type: 'Carga de saldo', description: 'Carga de saldo mediante aplicación', price: 1200, cardId: 1 },
   { id: 50, date: '2025-04-15', time: '07:20:00', type: 'Subte', description: 'Línea H Est. Hospitales', price: 445, cardId: 5 },
   { id: 51, date: '2025-04-15', time: '09:40:00', type: 'Colectivo', description: 'Línea 90 Interno 15', price: 320, cardId: 5 },
   { id: 52, date: '2025-04-15', time: '13:15:00', type: 'Carga de saldo', description: 'Carga de saldo mediante aplicación', price: 2500, cardId: 2 },
