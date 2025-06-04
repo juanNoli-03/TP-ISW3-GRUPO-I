@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Movement from './Movement'
 import { getFilteredTransactions } from '../../data/transactions';
 import './Movements.css';
+import { Container, Box } from '@mui/material';
 
 export default function Movements({ cardId }) {
   const [sinceDate, setSinceDate] = useState('')
@@ -17,26 +18,29 @@ export default function Movements({ cardId }) {
   };
 
   return(
-    <div className="movements-container">
-      <h3>Movimientos</h3>
-      <form className="form-filtros" onSubmit={handleSubmit}>
-        <div className="campo">
-          <label htmlFor="sinceDate">Fecha desde</label>
-          <input
-            id="sinceDate"
-            type="date"
-            value={sinceDate}
-            onChange={(e) => setSinceDate(e.target.value)}
-          />
-        </div>
-        <div className="campo">
-          <label htmlFor="untilDate">Fecha hasta</label>
-          <input
-            id="untilDate"
-            type="date"
-            value={untilDate}
-            onChange={(e) => setUntilDate(e.target.value)}
-          />
+    <Container className='mainContainer'>
+      <Box className="boxTitle">
+        <h1>Movimientos</h1>
+      </Box>
+      <div className="movements-container">
+        <form className="form-filtros" onSubmit={handleSubmit}>
+          <div className="campo">
+              <label htmlFor="sinceDate">Fecha desde</label>
+              <input
+                id="sinceDate"
+                type="date"
+                value={sinceDate}
+                onChange={(e) => setSinceDate(e.target.value)}
+              />
+          </div>
+          <div className="campo">
+            <label htmlFor="untilDate">Fecha hasta</label>
+            <input
+              id="untilDate"
+              type="date"
+              value={untilDate}
+              onChange={(e) => setUntilDate(e.target.value)}
+            />
         </div>
         <div className="campo">
           <label htmlFor="type">Tipo de movimiento</label>
@@ -53,30 +57,31 @@ export default function Movements({ cardId }) {
           </select>
         </div>
         <button type="submit" className="btn-buscar">Buscar</button>
-      </form>
-      <table>
-        <thead>
-          <tr>
-            <th>Fecha y hora</th>
-            <th>Tipo</th>
-            <th>Descripción</th>
-            <th>Valor</th>
-          </tr>
-        </thead>
-        <tbody>
-          {movements.length === 0 ? (
-            <tr className='fila-vacia'>
-              <td colSpan="4" className="sin-movimientos">
-                No hay movimientos disponibles
-              </td>
+        </form>
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha y hora</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+              <th>Valor</th>
             </tr>
-          ) : (
-            movements.map((item) => (
-              <Movement key={item.id} movement={item} />
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {movements.length === 0 ? (
+              <tr className='fila-vacia'>
+                <td colSpan="4" className="sin-movimientos">
+                  No hay movimientos disponibles
+                </td>
+              </tr>
+            ) : (
+              movements.map((item) => (
+                <Movement key={item.id} movement={item} />
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+  </Container>
   )
 }
