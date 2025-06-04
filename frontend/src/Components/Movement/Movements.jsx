@@ -2,17 +2,25 @@ import { useState } from 'react';
 import Movement from './Movement'
 import { getFilteredTransactions } from '../../data/transactions';
 import './Movements.css';
+<<<<<<< Updated upstream
+=======
+import { Container, Box } from '@mui/material';
+import { findCardByIdUser } from '../../utils';
 
-export default function Movements({ cardId }) {
+export default function Movements() {
+  
+  const cardSelected = findCardByIdUser ();
+>>>>>>> Stashed changes
+
   const [sinceDate, setSinceDate] = useState('')
   const [untilDate, setUntilDate] = useState('')
   const [type, setType] = useState('')
-  const [movements, setMovements] = useState(getFilteredTransactions(cardId, '', '', ''))
+  const [movements, setMovements] = useState(getFilteredTransactions(cardSelected.id, '', '', ''))
 
   //Manejador de solicitud de filtrado de los movimientos de la tarjeta:
   const handleSubmit = (e) => {
     e.preventDefault();
-    const result = getFilteredTransactions(cardId, sinceDate, untilDate, type);
+    const result = getFilteredTransactions(cardSelected.id, sinceDate, untilDate, type);
     setMovements(result);
   };
 

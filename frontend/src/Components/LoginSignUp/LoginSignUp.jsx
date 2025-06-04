@@ -33,8 +33,9 @@ export default function LoginSignUp({ isLogin }) {
 
     for (const userRegistrado of users) {
       if (usuario.email === userRegistrado.email && usuario.password === userRegistrado.password) {
-        alert("Login Exitoso!"); 
-        loginExitoso = true; 
+        localStorage.setItem ("idUsuario", userRegistrado.id);
+        localStorage.setItem ("nombreUsuario", userRegistrado.name);
+        loginExitoso = true;
         navigate('/home'); 
         break;
       }
