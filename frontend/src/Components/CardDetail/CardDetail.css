@@ -1,0 +1,62 @@
+.container {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.card {
+    border-radius: 50px;
+}
+
+.card > img {
+    height: 100px;
+    width: 100px;
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.imgBox > img {
+    height: 200px;
+    width: 300px;
+}
+
+.detailsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.detailBox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.detailBox > button {
+    font-size: small;
+    font-weight: bold;
+    background-color: #00669C;
+}
+
+.detailBox > h2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.amountBox {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.amount {
+    color: #00669C;;
+}
