@@ -1,7 +1,11 @@
 import { Box, Card, CardContent, Button, Container } from "@mui/material";
 import './CardDetail.css';
+import { findCardByIdUser } from '../../utils';
 
 export default function CardDetail() {
+
+  const cardSelected = findCardByIdUser ();
+
   return (
     <Container className="container">
     <Box className="boxTitle">
@@ -15,7 +19,7 @@ export default function CardDetail() {
         <Box className="detailsContainer">
           <Box className="detailBox">
             <h3>Tarjeta:</h3>
-            <p>6061-2683-9310-1189</p>
+            <p>{cardSelected.number}</p>
           </Box>
           <Box className="detailBox">
             <h3>Beneficio:</h3>
@@ -33,7 +37,7 @@ export default function CardDetail() {
         
         <Box className="amountBox">
           <h2>Saldo:</h2>
-          <h2 className="amount">$28.380</h2>
+          <h2 className="amount">${cardSelected.balance}</h2>
         </Box>
       </CardContent>
     </Card>
