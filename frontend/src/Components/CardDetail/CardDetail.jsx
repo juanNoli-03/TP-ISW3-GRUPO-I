@@ -4,8 +4,8 @@ import { findCardByIdUser } from '../../utils';
 
 export default function CardDetail() {
 
-  const cardSelected = findCardByIdUser ();
-
+ const cardSelected = findCardByIdUser ();
+  
   return (
     <Container className="container">
     <Box className="boxTitle">
