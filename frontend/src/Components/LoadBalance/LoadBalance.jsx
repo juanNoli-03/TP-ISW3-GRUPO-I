@@ -40,6 +40,7 @@ const navigate = useNavigate();
 
 
 const card = cards.find(card=> card.id ===idCard);
+const now = new Date();
 
 
 
@@ -60,6 +61,7 @@ useEffect( ()=>{
 
  //Traer los datos del usuario ?
     fetchUserPaymentMethods();
+    
 
 }
 ,[card]);
@@ -78,18 +80,18 @@ const handleSubmit = (e) => {
     let newBalance = card.balance + amount;
     card.balance=newBalance;
 
-    const now = new Date();
+
 
     //Logica de generar una nueva transaccion 
     const transaction={
     date:`${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`,
-    time: now.toLocaleTimeString(),
+    time:`${String(now.getHours())}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`,
     type: "Carga de saldo",
     description: "Carga de saldo mediante aplicación",
     price: amount,
     cardId: card.id
   }
-  console.log(transaction);
+  
   addTransaction(transaction);
   setLoading(false);
     navigate("/home"); // Redireccionar
