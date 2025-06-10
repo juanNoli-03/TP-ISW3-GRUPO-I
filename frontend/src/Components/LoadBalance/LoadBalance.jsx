@@ -82,10 +82,10 @@ const handleSubmit = (e) => {
 
     //Logica de generar una nueva transaccion 
     const transaction={
-    date: now.toLocaleDateString(),
+    date:`${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`,
     time: now.toLocaleTimeString(),
     type: "Carga de saldo",
-    description: "Carga de saldo mediante aplicacion",
+    description: "Carga de saldo mediante aplicación",
     price: amount,
     cardId: card.id
   }
