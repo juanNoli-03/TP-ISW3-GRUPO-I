@@ -2,6 +2,7 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LoginSignUp from './Components/LoginSignUp/LoginSignUp';
 import Home from './Components/Home/Home'; 
+import LoadBalance from './Components/LoadBalance/LoadBalance'
 
 function App() {
   return (
@@ -14,9 +15,15 @@ function App() {
 
         <Route path="/home" element={<Home />} />
 
+        <Route path="/" element={<Home />} />
+
+         <Route path="/loadBalance" element={<LoadBalance idCard={1}/>} />
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );
+
+  
 }
 export default App;
