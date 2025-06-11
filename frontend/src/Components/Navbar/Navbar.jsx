@@ -26,12 +26,12 @@ function Navbar() {
 
       <div className="navbar-links">
         {/* Mostrar "Ver mis datos" solo si estamos en /home */}
-        {location.pathname === '/home' && (
+        {(location.pathname === '/home' || location.pathname === '/loadBalance') && (
           <Link to="/MyData">Ver mis datos</Link>
         )}
 
         {/* Mostrar "Cerrar sesión" en todas las vistas excepto login/signUp */}
-        {(location.pathname === '/home' || location.pathname === '/MyData') && (
+        {(location.pathname === '/home' || location.pathname === '/MyData' || location.pathname === '/loadBalance') && (
           <button className="logout-button" onClick={handleLogout}>
             Cerrar Sesión
           </button>

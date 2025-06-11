@@ -18,9 +18,11 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import Navbar from '../Navbar/Navbar'
+import { useLocation } from "react-router-dom";
 
 
-export default function LoadBalance({idCard}) {
+export default function LoadBalance() {
 
 
 //Metodos de pago del usuario
@@ -37,6 +39,8 @@ const [selectedPaymentMethod, setSelectedPaymentMethod] = useState({
 
 const [loading, setLoading] = useState(false);
 const navigate = useNavigate();
+const location = useLocation();
+const idCard = location.state?.cardId;
 
 
 const card = cards.find(card=> card.id ===idCard);
@@ -100,7 +104,9 @@ const handleSubmit = (e) => {
 
 
   return (
+
     <>
+      <Navbar/> 
     {loading ? (
     <Box
     sx={{
@@ -118,7 +124,7 @@ const handleSubmit = (e) => {
     </Typography>
   </Box>
   ) : (
-<Box
+  <Box
       sx={{
         width: '100vw',
         minHeight: '100vh',
