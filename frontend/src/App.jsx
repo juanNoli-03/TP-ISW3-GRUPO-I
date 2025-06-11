@@ -19,7 +19,7 @@ function App() {
 
         <Route path="/" element={<Home />} />
 
-        <Route path="/loadBalance" element={<LoadBalance idCard={1}/>} />
+        <Route path="/loadBalance" element={<LoadBalance />} />
 
         <Route path="/MyData" element={<MyData />} />
 
