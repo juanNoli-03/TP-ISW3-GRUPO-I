@@ -44,8 +44,6 @@ export default function LoginSignUp({ isLogin }) {
     if (!loginExitoso) {
         alert("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
     }
-
-    console.log("Validando datos para:", usuario);
   };
 
   return (
