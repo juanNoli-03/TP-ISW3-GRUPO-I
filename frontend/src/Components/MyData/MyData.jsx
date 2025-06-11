@@ -1,19 +1,46 @@
 // src/Components/MyData/MyData.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MyData.css';
 import Navbar from '../Navbar/Navbar';
+import { findById } from '../../data/users';
 
 function MyData() {
+
   const [formData, setFormData] = useState({
-    nombre: 'RAMIRO XAVIER',
-    apellido: 'FERREIRO',
-    clave: '****',
-    correo: 'ramiro.x.ferreiro@gmail.com',
-    documento: '****119',
-    celular: '1139082072',
+    nombre: '',
+    apellido: '',
+    clave: '',
+    correo: '',
+    documento: '',
+    celular: '',
     fijo: '',
     aceptaInfo: false,
   });
+
+  useEffect(() => {
+    const userId = localStorage.getItem('idUsuario');
+    if (userId) {
+      const user = findById(userId);
+      if (user) {
+        // Si tienes nombre y apellido juntos en 'name', puedes separarlos acá si querés:
+        const [nombre, ...apellidoArr] = user.name.split(' ');
+        const apellido = apellidoArr.join(' ');
+
+        setFormData({
+          nombre: nombre || '',
+          apellido: apellido || '',
+          clave: '****', // no mostrar clave real
+          correo: user.email,
+          documento: user.dni.toString(), // para que sea string
+          celular: '',
+          fijo: '',
+          aceptaInfo: false,
+        });
+      }
+    }
+  }, []);
+
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

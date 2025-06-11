@@ -6,3 +6,7 @@ export let users = [
   { id: 4, name: 'Micaela Cáceres', email: 'micaelacaceres@example.com', password: '1234', dni: 44444444 },
   { id: 5, name: 'Paula Velázquez', email: 'paulavelazquez@example.com', password: '1234', dni: 55555555 },
 ]
+
+export function findById(id) {
+  return users.find(user => user.id === Number(id));
+}
