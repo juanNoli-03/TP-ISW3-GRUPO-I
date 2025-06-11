@@ -18,8 +18,16 @@ function MyData() {
   });
 
   useEffect(() => {
+
     const userId = localStorage.getItem('idUsuario');
-    if (userId) {
+    const localUserData = localStorage.getItem('userData');
+
+    if (localUserData) {
+
+      const parsed = JSON.parse(localUserData);
+      setFormData(parsed);
+      
+    }else if (userId) {
       const user = findById(userId);
       if (user) {
         // Si tienes nombre y apellido juntos en 'name', puedes separarlos acá si querés:
@@ -32,8 +40,8 @@ function MyData() {
           clave: '****', // no mostrar clave real
           correo: user.email,
           documento: user.dni.toString(), // para que sea string
-          celular: '',
-          fijo: '',
+          celular: user.celular.toString(),
+          fijo: user.fijo.toString(),
           aceptaInfo: false,
         });
       }

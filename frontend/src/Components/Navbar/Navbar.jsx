@@ -10,6 +10,9 @@ function Navbar() {
 
   const handleLogout = () => {
     // Acá podés limpiar localStorage o hacer lógica extra
+    localStorage.removeItem("idUsuario");
+    localStorage.removeItem("nombreUsuario");
+    localStorage.removeItem("userData");
     navigate('/');
   };
 
