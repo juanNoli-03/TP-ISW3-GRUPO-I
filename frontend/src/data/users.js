@@ -10,3 +10,8 @@ export let users = [
 export function findById(id) {
   return users.find(user => user.id === Number(id));
 }
+export function addUser (user) {
+  const newId = users.length ? users[users.length - 1].id + 1 : 1
+  users.push({ id: newId, ...user})
+  return newId;  
+  }

@@ -6,3 +6,9 @@ export let cards = [
   { id: 4, number: 4, balance: 2819, activated: true, userId: 4 },
   { id: 5, number: 5, balance: 4828, activated: true, userId: 5 }
 ]
+
+
+export const addCard = (card) => {
+  const newId = cards.length ? cards[cards.length - 1].id + 1 : 1
+  cards.push({ id: newId, ...card })
+}
