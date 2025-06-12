@@ -11,7 +11,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Lock from "@mui/icons-material/Lock";
 import { users,addUser } from "../../data/users";
-import { cards,addCard} from "../../data/cards";
+import { addCard} from "../../data/cards";
 
 import PhoneIcon from "@mui/icons-material/Phone";
 
@@ -22,7 +22,6 @@ export default function LoginSignUp({ isLogin }) {
     name: "",
     dni: "",
     celular: "",
-    fijo: "",
     email: "",
     password: "",
 
@@ -68,7 +67,6 @@ export default function LoginSignUp({ isLogin }) {
       usuario.password.trim() !== "" &&
       usuario.dni.trim() !== "" &&
       usuario.celular.trim() !== "" &&
-      usuario.fijo.trim() !== "" &&
       usuario.name.trim() !== "" &&
       card.number.trim() !== ""
     );
@@ -84,7 +82,6 @@ const registrarUsuario=()=>{
     // campos numéricos convertidos:
     dni: parseInt(usuario.dni),
     celular: parseInt(usuario.celular),
-    fijo: parseInt(usuario.fijo),
   };
 
   //Enviamos user y guardamos su id
@@ -407,51 +404,7 @@ const registrarUsuario=()=>{
                     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                       borderColor: "#63B3ED",
                     },
-                     '& input[type=number]': {
-                      MozAppearance: 'textfield',
-                    },
-                    '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
-                      WebkitAppearance: 'none',
-                      margin: 0,
-                    },
-                  }}
-                />
-                <TextField
-                  id="fijo"
-                  type="number"
-                  label="Telefono Fijo"
-                  name="fijo"
-                  size="small"
-                  value={usuario.fijo}
-                  onChange={(e) =>
-                    setUsuario({
-                      ...usuario,
-                      fijo: e.target.value,
-                    })
-                  }
-                  variant="outlined"
-                  InputProps={{
-                    style: { color: "black" },
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <PhoneIcon sx={{ color: "black" }} />
-                      </InputAdornment>
-                    ),
-                  }}
-                  InputLabelProps={{
-                    style: { color: "black", MozAppearance: 'textfield' },
-                  }}
-                  sx={{
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#4A5568",
-                    },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#63B3ED",
-                    },
-                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#63B3ED",
-                    },
-                     '& input[type=number]': {
+                    '& input[type=number]': {
                       MozAppearance: 'textfield',
                     },
                     '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
@@ -495,7 +448,7 @@ const registrarUsuario=()=>{
                     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                       borderColor: "#63B3ED",
                     },
-                     '& input[type=number]': {
+                    '& input[type=number]': {
                       MozAppearance: 'textfield',
                     },
                     '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {

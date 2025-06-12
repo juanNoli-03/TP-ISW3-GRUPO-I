@@ -10,7 +10,7 @@ export default function CardDetail() {
   const navigate =useNavigate();
 
 
- const cardSelected = findCardByIdUser ();
+  const cardSelected = findCardByIdUser ();
   
   const handleLoadBalance = ()=>{
 

@@ -13,7 +13,6 @@ function MyData() {
     correo: '',
     documento: '',
     celular: '',
-    fijo: '',
     aceptaInfo: false,
   });
 
@@ -41,7 +40,6 @@ function MyData() {
           correo: user.email,
           documento: user.dni.toString(), // para que sea string
           celular: user.celular.toString(),
-          fijo: user.fijo.toString(),
           aceptaInfo: false,
         });
       }
@@ -98,11 +96,6 @@ function MyData() {
             <div className="form-group">
                 <label>N° de teléfono celular</label>
                 <input type="text" value={formData.celular} name="celular" onChange={handleChange} />
-            </div>
-
-            <div className="form-group">
-                <label>N° de teléfono fijo</label>
-                <input type="text" value={formData.fijo} name="fijo" onChange={handleChange} />
             </div>
 
             <div className="form-group checkbox">
