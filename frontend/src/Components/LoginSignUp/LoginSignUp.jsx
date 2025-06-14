@@ -10,29 +10,68 @@ import { useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Lock from "@mui/icons-material/Lock";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import GenericSnackbar from "../Snackbar/GenericSnackbar";
 import { users,addUser } from "../../data/users";
 import { addCard} from "../../data/cards";
-
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import PhoneIcon from "@mui/icons-material/Phone";
 
-
 export default function LoginSignUp({ isLogin }) {
-  const [usuario, setUsuario] = useState({
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [loadingScreen, setLoadingScreen] = useState({
+    message: "",
+    duration: null,
+  });
+
+  const [snackbar, setSnackbar] = useState({
+    status: "",
+    message: "",
+  });
+
+  const [snackbarVisibility, setSnackbarVisibility] = useState(false);
+
+  const [usuario, setUsuario] = useState({
     name: "",
     dni: "",
     celular: "",
     email: "",
     password: "",
-
   });
   const [card, setCard] = useState({
     number: "",
-
   })
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
+
+  const navigateSignUp = () => {
+    setUsuario({
+      name: "",
+      dni: "",
+      celular: "",
+      email: "",
+      password: "",
+    })
+    navigate("/signup")
+  }
+
+  const navigateLogin = () => {
+     setUsuario({
+      name: "",
+      dni: "",
+      celular: "",
+      email: "",
+      password: "",
+    })
+    setCard({
+      number: ""
+    })
+    navigate("/login")
+  }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -41,6 +80,8 @@ export default function LoginSignUp({ isLogin }) {
   };
 
   const validarDatos = (usuario) => {
+    setSnackbarVisibility(false);
+    setIsLoading(false);
     let loginExitoso = false;
 
     for (const userRegistrado of users) {
@@ -48,13 +89,34 @@ export default function LoginSignUp({ isLogin }) {
         localStorage.setItem("idUsuario", userRegistrado.id);
         localStorage.setItem("nombreUsuario", userRegistrado.name);
         loginExitoso = true;
-        navigate('/home');
         break;
       }
     }
 
-    if (!loginExitoso) {
-      alert("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
+    if (loginExitoso) {
+      setLoadingScreen({
+        message: "Iniciando Sesión",
+        duration: 2000,
+      }),
+      setIsLoading(true),
+      setTimeout(() => {
+          navigate("/home");
+      }, 2000)
+       setUsuario({
+          name: "",
+          dni: "",
+          celular: "",
+          email: "",
+          password: "",
+        })
+    } else {
+     setTimeout(() => {
+        setSnackbar({
+          status: "error",
+          message: "Datos incorrectos. Verificalos y volvé a ingresarlos.",
+        });
+        setSnackbarVisibility(true);
+      }, 0);
     }
   };
 
@@ -97,24 +159,44 @@ const registrarUsuario=()=>{
   //Enviamos la card
   addCard(cardAEnviar)
 
+  setLoadingScreen({
+    message: "Creando cuenta",
+    duration: 2000,
+  }),
+  setIsLoading(true);
 
-
-  //redireccionamos al login
-  navigate("/");
+  setTimeout(() => {
+    setUsuario({
+      name: "",
+      dni: "",
+      celular: "",
+      email: "",
+      password: "",
+    })
+    setCard({
+      number: ""
+    })
+    navigate("/");
+    setIsLoading(false);
+    setSnackbar({
+      status: "success",
+      message: "Cuenta creada con éxito!",
+    });
+    setSnackbarVisibility(true);
+  }, 2000)
 
 }
 
-
   return (
+    <>
     <Box
       sx={{
         width: '100vw',
         height: '100vh',
-        backgroundImage: 'linear-gradient(to right, #F8F4C4, #D5E0B5, #A5C3A7, #6D8B89, #47667B)',
+        backgroundImage: `url(/Fondo_Login.jpg)`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        overflow: 'hidden',
       }}
     >
       <Container
@@ -127,32 +209,25 @@ const registrarUsuario=()=>{
       >
         <Card
           variant="elevation"
-          elevation={5}
+          elevation={20}
           sx={{
-            backgroundColor: "transparent",
+            backgroundColor: "white",
             borderRadius: "8px",
             width: { xs: "90%", sm: "400px" },
             border: 'none',
-            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.5)",
+            boxShadow: "0px 5px 25px #00669C",
           }}
         >
-          <CardContent sx={{ display: "flex", flexDirection: "column", gap: "20px", p: 5 }}>
+          <CardContent sx={{ display: "flex", flexDirection: "column", gap: "20px", p: isLogin ? 5 : 0, pt: isLogin ? 5 : 1, pr: !isLogin ? 3 : 5, pl: !isLogin ? 3 : 5 }}>
+            <img src="/app-sube.webp" alt="" style={{width:"100px", height:"100px", display:"flex", alignSelf:"center"}} />
             <Typography
               variant="h4"
-              color="black"
-              sx={{ fontWeight: "bold", textAlign: "center", mb: 1 }}
+              color="#00669C"
+              sx={{ fontWeight: "bold", textAlign: "center", mb: !isLogin ? 0.1 : 1 }}
             >
-              {isLogin === true ? "Inicio de Sesion" : "Registrarse"}
+              {isLogin === true ? "Inicio de Sesión" : "Registrarse"}
             </Typography>
 
-
-            <Typography
-              variant="body2"
-              color="black"
-              sx={{ textAlign: "center", mb: 3 }}
-            >
-              {isLogin === true ? "Por favor introduzca su email y constraseña" : "Por favor ingrese los datos requeridos para su registro"}
-            </Typography>
             {isLogin ? (
               <>
                 <TextField
@@ -315,9 +390,6 @@ const registrarUsuario=()=>{
                     "& .MuiOutlinedInput-notchedOutline": {
                       borderColor: "#4A5568",
                     },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#63B3ED",
-                    },
                     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                       borderColor: "#63B3ED",
                     },
@@ -341,7 +413,7 @@ const registrarUsuario=()=>{
                     style: { color: "black", MozAppearance: 'textfield' },
                     startAdornment: (
                       <InputAdornment position="start">
-                        <AccountCircle sx={{ color: "black" }} />
+                        <AssignmentIndIcon sx={{ color: "black" }} />
                       </InputAdornment>
                     ),
                   }}
@@ -351,9 +423,6 @@ const registrarUsuario=()=>{
                   sx={{
                     "& .MuiOutlinedInput-notchedOutline": {
                       borderColor: "#4A5568",
-                    },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#63B3ED",
                     },
                     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                       borderColor: "#63B3ED",
@@ -365,7 +434,6 @@ const registrarUsuario=()=>{
                       WebkitAppearance: 'none',
                       margin: 0,
                     },
-
                   }}
                 />
 
@@ -398,9 +466,6 @@ const registrarUsuario=()=>{
                     "& .MuiOutlinedInput-notchedOutline": {
                       borderColor: "#4A5568",
                     },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#63B3ED",
-                    },
                     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                       borderColor: "#63B3ED",
                     },
@@ -431,7 +496,7 @@ const registrarUsuario=()=>{
                     style: { color: "black" , MozAppearance: 'textfield'},
                     startAdornment: (
                       <InputAdornment position="start">
-                        <AccountCircle sx={{ color: "black" }} />
+                        <CreditCardIcon sx={{ color: "black" }} />
                       </InputAdornment>
                     ),
                   }}
@@ -441,9 +506,6 @@ const registrarUsuario=()=>{
                   sx={{
                     "& .MuiOutlinedInput-notchedOutline": {
                       borderColor: "#4A5568",
-                    },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#63B3ED",
                     },
                     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                       borderColor: "#63B3ED",
@@ -457,7 +519,6 @@ const registrarUsuario=()=>{
                     },
                   }}
                 />
-
 
                 <TextField
                   id="password"
@@ -519,7 +580,6 @@ const registrarUsuario=()=>{
               variant="contained"
               type="submit"
               disabled={!camposSonValidos()}
-
               sx={{
                 backgroundColor: "transparent",
                 fontWeight: "bold",
@@ -552,18 +612,31 @@ const registrarUsuario=()=>{
               {isLogin === true ? "Iniciar Sesión" : "Crear Cuenta"}
             </Button>
 
-            <Typography variant="body2" sx={{ textAlign: "center" }}>
+            <Typography variant="body2" sx={{ textAlign: "center", display:"flex", flexDirection:"column", justifyContent:"center" }}>
               {isLogin ? (
-                <>¿No tenés cuenta? <a onClick={() => navigate("/signup")} style={{ cursor: 'pointer' }}>Registrate</a></>
+                <>¿No tenés cuenta? <a onClick={() => navigateSignUp() } style={{ cursor: 'pointer', fontWeight:"bold", textDecoration:"underline", color:"#00669C" }}>Registrate</a></>
               ) : (
-                <>¿Ya tenés cuenta? <a onClick={() => navigate("/login")} style={{ cursor: 'pointer' }}>Iniciá sesión</a></>
+                <>¿Ya tenés cuenta? <a onClick={() => navigateLogin () } style={{ cursor: 'pointer', fontWeight:"bold", textDecoration:"underline", color:"#00669C" }}>Iniciá sesión</a></>
               )}
             </Typography>
-
           </CardContent>
         </Card>
       </Container>
     </Box>
+    {snackbarVisibility && (
+      <GenericSnackbar
+        status={snackbar.status}
+        message={snackbar.message}
+        visibility={snackbarVisibility}
+      />
+    )}
+    {isLoading && (
+      <LoadingScreen
+        message={loadingScreen.message}
+        duration={loadingScreen.duration}
+      />
+    )}
+    </>
   );
 }
 

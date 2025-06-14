@@ -3,7 +3,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #003366;
+  background-image: url("/header_mi_sube.png");
+  background-position: center;
   padding: 1rem 2rem;
   color: white;
 }
@@ -17,6 +18,9 @@
   text-decoration: none;
   margin-left: 1.5rem;
   font-weight: bold;
+  background-color: #00669C;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
 }
 
 .navbar-links a:hover {

@@ -21,6 +21,17 @@ p {
   flex-direction: column;
 }
 
+.input-button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.input-button-container > input {
+  width: 100%;
+}
+
 .form-group label {
   margin-bottom: 0.5rem;
   font-weight: bold;

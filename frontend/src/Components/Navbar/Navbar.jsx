@@ -2,17 +2,13 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css';
-import logo from '../../assets/logo.png';
+import logo from '/logo_sube.jpg';
 
 function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Acá podés limpiar localStorage o hacer lógica extra
-    localStorage.removeItem("idUsuario");
-    localStorage.removeItem("nombreUsuario");
-    localStorage.removeItem("userData");
     navigate('/');
   };
 

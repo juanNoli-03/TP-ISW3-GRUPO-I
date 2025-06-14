@@ -3,17 +3,74 @@ import React, { useState, useEffect } from 'react';
 import './MyData.css';
 import Navbar from '../Navbar/Navbar';
 import { findById } from '../../data/users';
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton'
+import EditDataModal from '../Modals/EditDataModal';
+import { InputAdornment, TextField } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import GenericSnackbar from "../Snackbar/GenericSnackbar";
 
 function MyData() {
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [loadingScreen, setLoadingScreen] = useState({
+    message: "",
+    duration: null,
+  });
+
+  const [snackbar, setSnackbar] = useState({
+    status: "",
+    message: "",
+  });
+
+  const [snackbarVisibility, setSnackbarVisibility] = useState(false);
+
+  const showLoadingScreen = () => {
+    setSnackbarVisibility(false);
+    setIsLoading(true);
+    closeEditDataModal();
+    setLoadingScreen({
+      message:"Modificando datos",
+      duration: 2000,
+    })
+    setTimeout( () => {
+      setIsLoading(false);
+      setSnackbar({
+        status: "success",
+        message: "Datos modificados!",
+      });
+      setSnackbarVisibility(true);
+    }, 2000)
+  }
+
+
+  const [visibilityEditDataModal, setVisibilityEditDataModal] = useState(false);
+  const [flagUpdate, setFlagUpdate] = useState(false);
+  const [valueToEdit, setValueToEdit] = useState("");
+  const [label, setLabel] = useState("");
+  const openEditContactModal = () => {
+    setVisibilityEditDataModal(true);
+  }
+  const closeEditDataModal = () => {
+    setVisibilityEditDataModal(false);
+  }
+  const setValue = (value) => {
+    setValueToEdit(value);
+  }
+
+  const dataUpdated = () => {
+    setFlagUpdate(true);
+  }
 
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
-    clave: '',
+    contraseña: '',
     correo: '',
     documento: '',
     celular: '',
-    aceptaInfo: false,
   });
 
   useEffect(() => {
@@ -26,7 +83,7 @@ function MyData() {
       const parsed = JSON.parse(localUserData);
       setFormData(parsed);
       
-    }else if (userId) {
+    } else if (userId) {
       const user = findById(userId);
       if (user) {
         // Si tienes nombre y apellido juntos en 'name', puedes separarlos acá si querés:
@@ -36,29 +93,27 @@ function MyData() {
         setFormData({
           nombre: nombre || '',
           apellido: apellido || '',
-          clave: '****', // no mostrar clave real
+          contraseña: user.password, // no mostrar clave real
           correo: user.email,
           documento: user.dni.toString(), // para que sea string
           celular: user.celular.toString(),
-          aceptaInfo: false,
         });
       }
     }
-  }, []);
+  }, [flagUpdate]);
 
+  const handleClick = (label, value) => {
+    setLabel(label);
+    openEditContactModal();
+    setValue(value)
+  }
 
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleSave = () => {
-    localStorage.setItem('userData', JSON.stringify(formData));
-    alert('Cambios guardados');
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
   return (
@@ -78,14 +133,54 @@ function MyData() {
                 <input type="text" value={formData.apellido} name="apellido" disabled />
             </div>
 
-            <div className="form-group">
-                <label>Clave</label>
-                <input type="password" value={formData.clave} name="clave" disabled />
+            <div style={{display:"flex", flexDirection:"column", gap:"10px"}}>
+                <label style={{fontWeight:"bold"}}>Contraseña</label>
+                 <div className="input-button-container">
+                  <TextField
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    disabled
+                    name="password"
+                    size="small"
+                    value={formData.contraseña}
+                    variant="outlined"
+                    sx={{
+                      width:"100%",
+                    }}
+                    InputProps={{
+                      style: { color: "black", border: "none" },
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {showPassword ? (
+                              <VisibilityOff sx={{ color: "black" }} />
+                            ) : (
+                              <Visibility sx={{ color: "black" }} />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                    <IconButton aria-label="" onClick={() => handleClick ("contraseña", formData.contraseña)}>
+                      <EditIcon sx={{color:"#00669C"}}/>
+                    </IconButton>
+                </div>
             </div>
 
             <div className="form-group">
-                <label>Correo electrónico</label>
-                <input type="email" value={formData.correo} name="correo" onChange={handleChange} />
+                <label style={{marginTop:"25px"}}>Correo electrónico</label>
+                <div className="input-button-container">
+                  <input type="email" value={formData.correo} name="correo" disabled />
+                  <IconButton aria-label="" onClick={() => handleClick ("correo", formData.correo)}>
+                    <EditIcon sx={{color:"#00669C"}}/>
+                  </IconButton>
+                </div>
             </div>
 
             <div className="form-group">
@@ -95,21 +190,36 @@ function MyData() {
 
             <div className="form-group">
                 <label>N° de teléfono celular</label>
-                <input type="text" value={formData.celular} name="celular" onChange={handleChange} />
+                <div className="input-button-container">
+                  <input type="text" value={formData.celular} name="celular" disabled />
+                  <IconButton aria-label="" onClick={() => handleClick ("celular", formData.celular)}>
+                    <EditIcon sx={{color:"#00669C"}}/>
+                  </IconButton>
+                </div>
             </div>
-
-            <div className="form-group checkbox">
-                <input
-                type="checkbox"
-                name="aceptaInfo"
-                checked={formData.aceptaInfo}
-                onChange={handleChange}
-                />
-                <span>Acepto recibir información relativa al Sistema Único de Boleto Electrónico y al servicio y obras de transporte</span>
-            </div>
-
-            <button className="btn-guardar" onClick={handleSave}>Guardar los cambios</button>
-            </div>
+          </div>
+          <EditDataModal
+            showEditDataModal={visibilityEditDataModal}
+            closeEditDataModal={closeEditDataModal}
+            valueToEdit={label}
+            value={valueToEdit}
+            formData={formData}
+            dataUpdated={dataUpdated}
+            showLoader={showLoadingScreen}
+          />
+          {snackbarVisibility && (
+            <GenericSnackbar
+              status={snackbar.status}
+              message={snackbar.message}
+              visibility={snackbarVisibility}
+            />
+          )}
+          {isLoading && (
+            <LoadingScreen
+              message={loadingScreen.message}
+              duration={loadingScreen.duration}
+            />
+          )}
     </>
   );
 }

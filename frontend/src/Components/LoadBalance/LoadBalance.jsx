@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import {usersPaymentMethods} from '../../data/users_x_payment_methods' 
+import React, { useState} from 'react'
 import {cards} from '../../data/cards' 
-import {paymentMethods} from '../../data/payment_methods' 
 import {addTransaction} from '../../data/transactions' 
 import {
   Box,
@@ -11,74 +9,56 @@ import {
   TextField,
   Button,
   FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Navbar from '../Navbar/Navbar'
 import { useLocation } from "react-router-dom";
-
+import Select from '@mui/material/Select';
+import { paymentMethods } from "../../data/payment_methods";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
+import GenericSnackbar from "../Snackbar/GenericSnackbar";
 
 export default function LoadBalance() {
 
-
-//Metodos de pago del usuario
-const [userPaymentMethods,setUserPaymentMethods]=useState([]);
-
-//Metodos de pago
-const [paymentMethodsData,setPaymentMethodsData]=useState([]);
-
 const [amount, setAmount] = useState(0);
-const [selectedPaymentMethod, setSelectedPaymentMethod] = useState({
-    data: "",
-    type: "",
-});
-
-const [loading, setLoading] = useState(false);
-const navigate = useNavigate();
 const location = useLocation();
 const idCard = location.state?.cardId;
 
+const [isLoading, setIsLoading] = useState(false);
+
+const [loadingScreen, setLoadingScreen] = useState({
+    message: "",
+    duration: null,
+});
+
+const [snackbar, setSnackbar] = useState({
+  status: "",
+  message: "",
+});
+
+const [snackbarVisibility, setSnackbarVisibility] = useState(false);
 
 const card = cards.find(card=> card.id ===idCard);
 const now = new Date();
 
+ const [paymentMethod, setPaymenthMethod] = useState('');
 
-
-useEffect( ()=>{
-
- //Traer los metodos de pago del usuario
-    const fetchUserPaymentMethods = ()=>{
-        //Seteamos los metodos de pago del usuario
-        const methods =usersPaymentMethods.filter(method => method.userId ===card.userId && method.activated);
-        setUserPaymentMethods(methods);
-        fetchPaymentMethods();
-    }
-
-    const fetchPaymentMethods = ()=>{
-        setPaymentMethodsData(paymentMethods);
-    }
-
-
- //Traer los datos del usuario ?
-    fetchUserPaymentMethods();
-    
-
-}
-,[card]);
+  const handleSelectChange = (event) => {
+    setPaymenthMethod(event.target.value);
+  };
 
 const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  setSnackbarVisibility(false);
+  setLoadingScreen({
+    message:"Cargando saldo",
+    duration: 2000,
+  })
+  setIsLoading(true);
 
-    if (!amount || !selectedPaymentMethod) {
-      console.log("❌ Falta monto o método seleccionado");
-      return;
-    }
- setLoading(true); // Activamos loader
- setTimeout(() => {
+  setTimeout(() => {
     //Logica de carga de saldo
 
     let newBalance = card.balance + amount;
@@ -97,8 +77,14 @@ const handleSubmit = (e) => {
   }
   
   addTransaction(transaction);
-  setLoading(false);
-    navigate("/home"); // Redireccionar
+    setAmount("");
+    setPaymenthMethod("");    
+    setIsLoading(false);
+    setSnackbar({
+      status: "success",
+      message: "Recarga realizada!",
+    });
+    setSnackbarVisibility(true);
   }, 2000);
 };
 
@@ -107,28 +93,11 @@ const handleSubmit = (e) => {
 
     <>
       <Navbar/> 
-    {loading ? (
     <Box
-    sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '300px',
-      gap: 2,
-    }}
-  >
-    <CircularProgress color="success" />
-    <Typography variant="h6" color="textSecondary">
-      Cargando saldo...
-    </Typography>
-  </Box>
-  ) : (
-  <Box
       sx={{
         width: '100vw',
-        minHeight: '100vh',
-        backgroundImage: 'linear-gradient(to right, #F8F4C4, #D5E0B5, #A5C3A7, #6D8B89, #47667B)',
+        minHeight: '89.1vh',
+        backgroundColor:"#00669C",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -149,8 +118,11 @@ const handleSubmit = (e) => {
             Número de tarjeta: {card.number}
           </Typography>
 
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            Saldo actual: ${card.balance.toFixed(2)}
+          <Typography variant="body1" sx={{display:"flex", gap:"5px"}}>
+              Saldo actual:
+              <p style={{fontWeight:"bold", color:"rgb(39, 174, 96)"}}>
+                ${card.balance.toFixed(2)}
+              </p>
           </Typography>
 
           {/* FORMULARIO */}
@@ -171,35 +143,26 @@ const handleSubmit = (e) => {
               }}
             />
 
-            <FormControl component="fieldset" sx={{ mt: 2 }}>
-              <FormLabel component="legend" sx={{ color: "black", mb: 1 }}>
-                Método de pago
-              </FormLabel>
-              <RadioGroup name="paymentMethod">
-                {userPaymentMethods.map((method) => {
-                  const info = paymentMethodsData.find((p) => p.id === method.paymentMethodId);
-                  return (
-                    <FormControlLabel
-                      key={method.id}
-                      value={method.userId}
-                      control={
-                        <Radio
-                          checked={selectedPaymentMethod.data === method.data}
-                          onChange={() => setSelectedPaymentMethod({ data: method.data, type: info.type })}
-                        />
-                      }
-                      label={`${info ? info.type : "Método desconocido"}: ${method.data}`}
-                      sx={{ color: "black" }}
-                    />
-                  );
-                })}
-              </RadioGroup>
+            <FormControl component="fieldset" sx={{ mt: 2, width:"100%" }}>
+              <InputLabel id="demo-simple-select-label">Metodo de pago</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={paymentMethod}
+                  label="Método de pago"
+                  onChange={handleSelectChange}
+                >
+                  {console.log(paymentMethods)}
+                  {paymentMethods.map((method)=> (
+                    <MenuItem key={method.id} value={method.type}>{method.type}</MenuItem>
+                  ))}
+                </Select>
             </FormControl>
 
             <Button
               type="submit"
               fullWidth
-              disabled={!amount || !selectedPaymentMethod}
+              disabled={!amount || !paymentMethod}
               sx={{
                 mt: 3,
                 backgroundColor: "transparent",
@@ -223,8 +186,19 @@ const handleSubmit = (e) => {
         </CardContent>
       </Card>
     </Box>
+    {snackbarVisibility && (
+      <GenericSnackbar
+        status={snackbar.status}
+        message={snackbar.message}
+        visibility={snackbarVisibility}
+      />
     )}
-
+    {isLoading && (
+      <LoadingScreen
+        message={loadingScreen.message}
+        duration={loadingScreen.duration}
+      />
+    )}
   </>
   );
 }

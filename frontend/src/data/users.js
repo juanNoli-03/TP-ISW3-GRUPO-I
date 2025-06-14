@@ -14,4 +14,18 @@ export function addUser (user) {
   const newId = users.length ? users[users.length - 1].id + 1 : 1
   users.push({ id: newId, ...user})
   return newId;  
+}
+
+export function updateUser (id, valueToEdit, editData) {
+  const foundUser = findById(id);
+  console.log(editData);
+  if (valueToEdit == "contraseña") {
+    foundUser.password = editData[valueToEdit];
+  } else if (valueToEdit == "correo") {
+    foundUser.email = editData[valueToEdit];
+  } else {
+    foundUser.celular = editData[valueToEdit]; 
   }
+  console.log(foundUser);
+  users[id] = foundUser;
+}
